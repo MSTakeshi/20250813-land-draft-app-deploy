@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build and run Docker Compose services
+      run: docker compose up --build -d
+
+    - name: Wait for services to be ready
+      run: | 
+        echo "Waiting for backend to be ready..."
+        until curl -s http://localhost:8000/docs > /dev/null; do
+          sleep 5
+        done
+        echo "Backend is ready!"
+        echo "Waiting for frontend to be ready..."
+        until curl -s http://localhost:3000 > /dev/null; do
+          sleep 5
+        done
+        echo "Frontend is ready!"
+
+    - name: Run Backend Tests
+      run: docker compose run --rm backend pytest
+
+    - name: Install dependencies
+      run: docker compose run --rm frontend npm install
+
+    - name: Run Frontend E2E Tests
+      run: docker compose run --rm frontend npm run test-e2e
