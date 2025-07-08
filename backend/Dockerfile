@@ -8,11 +8,13 @@ ENV PYTHONPATH=/app
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
-    libpq-dev && \
+    libpq-dev \
+    pkg-config && \
     rm -rf /var/lib/apt/lists/*
 
-# Set CARGO_HOME to a writable directory for maturin
-ENV CARGO_HOME=/tmp/cargo
+# Set environment variables for Cargo/Maturin to use writable directories
+ENV CARGO_HOME=/tmp/cargo_home
+ENV CARGO_TARGET_DIR=/tmp/cargo_target
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
