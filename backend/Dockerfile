@@ -11,6 +11,9 @@ RUN apt-get update && \
     libpq-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# Set CARGO_HOME to a writable directory for maturin
+ENV CARGO_HOME=/tmp/cargo
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
