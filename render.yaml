@@ -1,0 +1,46 @@
+services:
+  # 1. PostgreSQLデータベース (無料枠)
+  - name: database
+    type: pserv
+    plan: free
+    image: postgres
+    envVars:
+      - key: POSTGRES_DB
+        value: land_draft_db
+      - key: POSTGRES_USER
+        value: user
+      # Renderが自動的に安全なパスワードを生成します
+      - key: POSTGRES_PASSWORD
+        generateValue: true
+
+  # 2. バックエンド (FastAPI)
+  - name: backend
+    type: web
+    plan: free
+    env: python
+    repo: https://github.com/MSTakeshi/-land-draft-app.git
+    rootDir: ./backend
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: DATABASE_URL
+        fromService:
+          type: pserv
+          name: database
+          property: connectionString
+
+  # 3. フロントエンド (Next.js)
+  - name: frontend
+    type: web
+    plan: free
+    env: node
+    repo: https://github.com/MSTakeshi/-land-draft-app.git
+    rootDir: ./frontend
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: backend
+          property: url
