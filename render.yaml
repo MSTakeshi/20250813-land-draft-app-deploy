@@ -1,5 +1,4 @@
 services:
-  # 1. PostgreSQLデータベース (無料枠)
   - name: database
     type: pserv
     plan: free
@@ -9,11 +8,9 @@ services:
         value: land_draft_db
       - key: POSTGRES_USER
         value: user
-      # Renderが自動的に安全なパスワードを生成します
       - key: POSTGRES_PASSWORD
         generateValue: true
 
-  # 2. バックエンド (FastAPI)
   - name: backend
     type: web
     plan: free
@@ -29,7 +26,6 @@ services:
           name: database
           property: connectionString
 
-  # 3. フロントエンド (Next.js)
   - name: frontend
     type: web
     plan: free
