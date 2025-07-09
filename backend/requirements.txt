@@ -7,3 +7,4 @@ asyncpg==0.29.0
 pytest
 ruff
 black
+psycopg2-binary
