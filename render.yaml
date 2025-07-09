@@ -3,7 +3,7 @@ services:
   - name: database
     type: pserv
     plan: free
-    image: 'postgres:13' # バージョンを指定
+    image: 'postgres:13'
     envVars:
       - key: POSTGRES_DB
         value: land_draft_db
