@@ -61,6 +61,25 @@ async def create_voter(voter: VoterCreate, db: Session = Depends(get_db)):
     return VoterResponse(**new_voter.__dict__)
 
 
+@app.get("/voters", response_model=List[VoterResponse])
+async def get_voters(db: Session = Depends(get_db)):
+    """
+    Retrieves all voters.
+    """
+    voters = db.query(Voter).all()
+    return [VoterResponse(**voter.__dict__) for voter in voters]
+
+
+@app.delete("/voters")
+async def delete_all_voters(db: Session = Depends(get_db)):
+    """
+    Deletes all registered voters.
+    """
+    db.query(Voter).delete()
+    db.commit()
+    return {"message": "All voters deleted successfully"}
+
+
 @app.post("/draft/run", response_model=DraftResult)
 async def trigger_draft_run(db: Session = Depends(get_db)):
     """
@@ -70,9 +89,9 @@ async def trigger_draft_run(db: Session = Depends(get_db)):
         DraftResult: The results of all four rounds.
     """
     voters = db.query(Voter).all()
-    if len(voters) < 10:
+    if len(voters) < 23:
         raise HTTPException(
-            status_code=400, detail="ドラフトを実行するには最低10名の投票者が必要です。"
+            status_code=400, detail="ドラフトを実行するには最低23名の投票者が必要です。"
         )
 
     voters_list = [v.__dict__ for v in voters]

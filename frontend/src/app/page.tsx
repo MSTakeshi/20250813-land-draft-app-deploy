@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Home() {
   const router = useRouter();
@@ -88,7 +89,12 @@ export default function Home() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mb-8">
         <h1 className="text-2xl font-bold mb-6 text-center">XANA DAO Village 土地抽選会</h1>
-        <p className="text-center text-lg mb-4">現在の登録者数: {votersCount} / 10</p>
+        <div className="text-center mb-4">
+          <Link href="/voters" className="text-indigo-600 hover:text-indigo-800 font-medium">
+            投票完了者一覧を見る
+          </Link>
+        </div>
+        <p className="text-center text-lg mb-4">現在の登録者数: {votersCount} / 23</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">投票者名（ニックネーム）</label>

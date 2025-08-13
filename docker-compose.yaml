@@ -21,6 +21,8 @@ services:
       - ./backend:/app
     ports:
       - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/land_draft_db
     depends_on:
       - db
 
