@@ -33,7 +33,7 @@ services:
     repo: https://github.com/MSTakeshi/20250813-land-draft-app-deploy.git
     rootDir: ./frontend
     buildCommand: "npm install && npm run build"
-    startCommand: "npm start"
+    startCommand: "npm run start"
     envVars:
       - key: NEXT_PUBLIC_API_URL
         fromService:
