@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Voter {
   name: string;
   choice1: number;
@@ -18,7 +20,7 @@ export default function VotersPage() {
   useEffect(() => {
     const fetchVoters = async () => {
       try {
-        const response = await fetch('http://localhost:8000/voters');
+        const response = await fetch(`${API_URL}/voters');
         if (!response.ok) {
           throw new Error('投票者リストの取得に失敗しました');
         }

@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface VoterResult {
   name: string;
   choice1: number;
@@ -20,7 +22,7 @@ export default function ResultsPage() {
     if (round) {
       const fetchResults = async () => {
         try {
-          const response = await fetch(`http://localhost:8000/draft/${round}`);
+          const response = await fetch(`${API_URL}/draft/${round}`);
           if (!response.ok) {
             throw new Error(`エラー: ${response.statusText}`);
           }

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function Home() {
   const router = useRouter();
   const [name, setName] = useState('');
@@ -15,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     const fetchVotersCount = async () => {
       try {
-        const response = await fetch('http://localhost:8000/voters/count');
+        const response = await fetch(`${API_URL}/voters/count');
         if (response.ok) {
           const count = await response.json();
           setVotersCount(count);
@@ -33,7 +35,7 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/voters', {
+      const response = await fetch(`${API_URL}/voters', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +59,7 @@ export default function Home() {
       setChoice2('');
       setChoice3('');
       // 投票者数も更新
-      const updatedCountResponse = await fetch('http://localhost:8000/voters/count');
+      const updatedCountResponse = await fetch(`${API_URL}/voters/count');
       if (updatedCountResponse.ok) {
         const updatedCount = await updatedCountResponse.json();
         setVotersCount(updatedCount);
@@ -69,7 +71,7 @@ export default function Home() {
 
   const handleRunDraft = async () => {
     try {
-      const response = await fetch('http://localhost:8000/draft/run', {
+      const response = await fetch(`${API_URL}/draft/run', {
         method: 'POST',
       });
 
