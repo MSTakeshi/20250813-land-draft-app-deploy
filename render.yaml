@@ -2,7 +2,7 @@ services:
   - name: database
     type: pserv
     plan: free
-    image: postgres:16
+    image: postgres:latest
     envVars:
       - key: POSTGRES_DB
         value: land_draft_db
