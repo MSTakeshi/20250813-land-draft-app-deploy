@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     const fetchVotersCount = async () => {
       try {
-        const response = await fetch(`${API_URL}/voters/count');
+        const response = await fetch(`${API_URL}/voters/count`);
         if (response.ok) {
           const count = await response.json();
           setVotersCount(count);
@@ -35,7 +35,7 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/voters', {
+      const response = await fetch(`${API_URL}/voters`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default function Home() {
       setChoice2('');
       setChoice3('');
       // 投票者数も更新
-      const updatedCountResponse = await fetch(`${API_URL}/voters/count');
+      const updatedCountResponse = await fetch(`${API_URL}/voters/count`);
       if (updatedCountResponse.ok) {
         const updatedCount = await updatedCountResponse.json();
         setVotersCount(updatedCount);
@@ -71,7 +71,7 @@ export default function Home() {
 
   const handleRunDraft = async () => {
     try {
-      const response = await fetch(`${API_URL}/draft/run', {
+      const response = await fetch(`${API_URL}/draft/run`, {
         method: 'POST',
       });
 

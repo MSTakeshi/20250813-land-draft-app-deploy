@@ -20,7 +20,7 @@ export default function VotersPage() {
   useEffect(() => {
     const fetchVoters = async () => {
       try {
-        const response = await fetch(`${API_URL}/voters');
+        const response = await fetch(`${API_URL}/voters`);
         if (!response.ok) {
           throw new Error('投票者リストの取得に失敗しました');
         }
