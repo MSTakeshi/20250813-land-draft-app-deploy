@@ -25,6 +25,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+
 # In-memory storage for voters and draft results
 @app.post("/voters", response_model=VoterResponse)
 async def create_voter(voter: VoterCreate, db: Session = Depends(get_db)):
